@@ -4,11 +4,10 @@ import express from "express";
 import logger from "morgan";
 import { auth, message, user } from "./app/routers";
 import passport from "./app/passport";
-import Message from ".app/schema/Message";
-
 //run db connect
 import "./app/core/connect";
-import Messsage from "./app/schema/Message";
+import Message from "./app/schema/Message";
+import User from "./app/schema/User";
 
 const app = express();
 app.use(express.json());
@@ -31,14 +30,7 @@ app.get("/", (req, res) => {
 
 app.get("/messages", async (req, res) => {
   // SELECT * FROM messages
-  let messages = await Message.aggregate({
-    $lookup: {
-      from: "users",
-      localField: "userId",
-      foreignField: "_id",
-      as: "user_profile"
-    }
-  });
+  let messages = await Message.find({});
   res.json(messages);
 });
 
