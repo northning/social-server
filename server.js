@@ -29,9 +29,17 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/message", async (req, res) =>{
-  let message = await Message.find({});
-  res:json(message);
+app.get("/messages", async (req, res) => {
+  // SELECT * FROM messages
+  let messages = await Message.aggregate({
+    $lookup: {
+      from: "users",
+      localField: "userId",
+      foreignField: "_id",
+      as: "user_profile"
+    }
+  });
+  res.json(messages);
 });
 
 const port = process.env.PORT || 8080;
