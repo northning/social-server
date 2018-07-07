@@ -4,7 +4,7 @@ import express from "express";
 import logger from "morgan";
 import { auth, message, user } from "./app/routers";
 import passport from "./app/passport";
-import Message from "./schema/Message";
+import Message from ".app/schema/Message";
 
 //run db connect
 import "./app/core/connect";
